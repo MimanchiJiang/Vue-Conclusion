@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue版本解答</title>
+    <style>
+        .body {
+            background: red;
+        }
+
+        ul,
+        ol {
+            list-style: none;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .clearfix {
+            content: '';
+            display: block;
+            clear: both;
+        }
+
+        .content {
+            background-color: beige;
+            height: 2300px;
+
+        }
+
+        .content>aside {
+            float: left;
+            border: 1px solid beige;
+            width: 20%;
+            background-color: beige;
+
+
+
+        }
+
+        .content>main {
+
+            float: left;
+            max-width: 808px;
+
+
+        }
+
+        p {
+            text-indent: 2em;
+        }
+
+        pre {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        code,
+        span {
+            font-size: 15px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 style="background-color: beige;">
+        <center>Vue版本解答</center>
+    </h1>
+    <div class="clearfix content">
+        <aside></aside>
+        <main>
+            <span>
+                Vue分为两个版本---<strong>完整版</strong>和<strong>非完整版</strong>；非完整版又叫做runtime版本。
+            </span>
+            <br>
+            <br>
+            <h3>两个版本的区别</h3>
+            <ul>
+                <li>一、非完整版无法从html里获得视图；完整版可以</li>
+                <li>二、非完整版需要写一个render函数，来生成DOM标签；完整版直接卸载HTML里或者template里</li>
+                <br>
+            </ul>
+            <span><strong>从以上结果来看，完整版远远比非完整版要来的方便得多，那么非完整版存在的意义是什么呢？</strong></span>
+            <br>
+            <span>
+                原因是，非完整版能够使代码更加的独立，因为缺少编译器，无法将html变成节点。从而通过webpack自己翻译。从而达到减小体积的目的
+            </span>
+            <span>
+                cdn引入中，vue.js为完整版；vue.runtime.js为非完整版
+            </span>
+            <br>
+            <br>
+            <hr>
+            <br>
+            <h3>代码沙盒</h3>
+            <span>
+                可以使用<a href="https://codesandbox.io/">代码沙盒</a>（codesandbox）来进行vue代码的编写。在codesandbox中，能够在页面内实时显示页面效果
+            </span>
+            <span>
+                当然，如果你想在本地跑代码，也可以通过File-->Export to ZIP 就可以把压缩包下载到本地。
+            </span>
+        </main>
+
+    </div>
+    <center>
+        <hr>
+        <footer>&copy;此博客最终解释权归Mi Manchi所有</footer>
+        <br><br>
+    </center>
+</body>
+
+</html>
