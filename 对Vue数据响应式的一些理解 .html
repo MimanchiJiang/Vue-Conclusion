@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>对Vue数据响应式的一些理解</title>
+    <style>
+        .container {
+            display: grid;
+            grid-template-rows: 60px auto auto 100px;
+            grid-template-columns: 15% 5px auto 50px 10%;
+            background-color: beige;
+        }
+
+        .a {
+            grid-row-start: 1;
+            grid-row-end: 2;
+            grid-column-start: 1;
+            grid-column-end: 6;
+        }
+
+        .b {
+            grid-row-start: 2;
+            grid-row-end: 4;
+            grid-column-start: 1;
+            grid-column-end: 3;
+        }
+
+        .c {
+            grid-row-start: 2;
+            grid-row-end: 3;
+            grid-column-start: 3;
+            grid-column-end: 4;
+            position: sticky;
+            position: -webkit-sticky;
+            top: 0;
+            background-color: beige;
+            font-size: 20px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+        }
+
+        .f {
+            grid-row-start: 3;
+            grid-row-end: 4;
+            grid-column-start: 3;
+            grid-column-end: 4;
+        }
+
+        .d {
+            grid-row-start: 2;
+            grid-row-end: 4;
+            grid-column-start: 4;
+            grid-column-end: 6;
+        }
+
+        ul,
+        ol {
+            list-style: none;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .clearfix {
+            content: '';
+            display: block;
+            clear: both;
+        }
+
+        .content {
+            background-color: beige;
+            height: 2300px;
+
+        }
+
+        .content>aside {
+            float: left;
+            border: 1px solid beige;
+            width: 20%;
+            background-color: beige;
+
+
+
+        }
+
+        .content>main {
+
+            float: left;
+            max-width: 808px;
+
+
+        }
+
+        p {
+            text-indent: 2em;
+        }
+
+        pre {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        code,
+        span {
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="a">
+            <h1>
+                <center>对Vue数据响应式的一些理解</center>
+            </h1>
+        </div>
+        <div class="b"></div>
+        <div class="c sticky"><strong>【目录】</strong>
+
+            <a href="#语法">ES6语法解析---getter、setter</a>、
+            <a href="#添加">添加属性的API</a>、
+            <a href="#代理与监听">代理与监听</a>、
+            <a href="#data">监听不存在的data</a>
+        </div>
+        <div class="d">
+        </div>
+        <div class="f">
+            <main>
+
+                <strong style="font-size: 20px;">【正文】</strong>
+                <br>
+                <h3 id="语法"><a
+                        href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Object_initializer#ECMAScript_6%E6%96%B0%E6%A0%87%E8%AE%B0">getter、setter</a>
+                </h3>
+                <span>
+                    getter:在函数前面加get，使用时不用加括号
+                </span>
+                <blockquote>
+                    如：
+                    <pre>
+let obj1 = {
+  姓: "高",
+  名: "圆圆",
+  姓名() {
+    return this.姓 + this.名;
+  },
+  age: 18
+};
+
+console.log("需求一：" + obj1.<strong>姓名()</strong>);
+</pre>
+                    <br><strong>可改成</strong><br>
+                    <pre>
+let obj2 = {
+  姓: "高",
+名: "圆圆",
+get 姓名() {
+  return this.姓 + this.名;
+},
+ age: 18
+};
+
+console.log("需求二：" + obj2.<strong>姓名</strong>);
+                </pre>
+                </blockquote><br>
+                <span>setter:设置一个新值，用=xxx触发</span>
+                <blockquote>
+                    <pre>
+let obj3 = {
+    姓: "高",
+    名: "圆圆",
+    get 姓名() {
+      return this.姓 + this.名;
+    },
+    set 姓名(xxx){
+      this.姓 = xxx[0]
+      this.名 = xxx.slice(1)
+    },
+    age: 18
+    };
+    
+    obj3.姓名 = '高媛媛'
+    
+    console.log(`需求三：姓 ${obj3.姓}，名 ${obj3.名}`)                    
+                </pre>
+                </blockquote>
+                <br>
+                <hr>
+                <br>
+                <h3 id="添加">添加属性的API</h3>
+                <span>如果你想在已经设置好的对象里添加属性，你可以使用<a
+                        href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty</a>这个API，他会赋给你一个Value</span>
+                <br><br>
+                <hr>
+                <br>
+                <h3 id="代理与监听">
+                    代理与监听
+                </h3>
+                <span>
+                    Vue会时刻监听你的data值，当你对data值进行修改时，Vue都会知道，并将值的属性修改掉（get、set）,一边用来监控该值是否产生变化。类似房东与中介的关系
+                </span>
+                <br>
+                <br>
+                <hr>
+                <br>
+                <h3 id="data">监听不存在的data值</h3>
+                <span> 前面既然讲到了监听，可是Vue无法监听一开始不存在的data。</span><br>
+                <span>加入你监听了obj.b,但是你的data里面压根就没有b，但是未来可能会有，你要怎么办呢？</span>
+                <br>
+                <span>你可以使用<strong>Vue.set</strong>或者<strong>this.$set</strong></span>
+                他会自动创建<strong>代理和监听</strong>，并自动进行UI更新
+
+            </main>
+        </div>
+
+    </div>
+</body>
+
+</html>
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            display: grid;
+            grid-template-rows: 60px 300px 100px;
+            grid-template-columns: 40px 50px auto 50px 40px;
+            border: 1px solid black;
+        }
+
+        .a,
+        .b,
+        .c,
+        .d {
+            border: 1px solid black;
+        }
+
+        .a {
+            grid-row-start: 1;
+            grid-row-end: 2;
+            grid-column-start: 1;
+            grid-column-end: 6;
+        }
+
+        .b {
+            grid-row-start: 2;
+            grid-row-end: 4;
+            grid-column-start: 1;
+            grid-column-end: 3;
+        }
+
+        .c {
+            grid-row-start: 2;
+            grid-row-end: 4;
+            grid-column-start: 3;
+            grid-row-end: 4;
+        }
+
+        .d {
+            grid-row-start: 2;
+            grid-row-end: 4;
+            grid-column-start: 4;
+            grid-column-end: 6;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="a"></div>
+        <div class="b"></div>
+        <div class="c"></div>
+        <div class="d"></div>
+        <div class="e"></div>
+    </div>
+</body>
+
+</html>
