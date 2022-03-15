@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue进阶属性--computed、watch</title>
+    <style>
+        .container {
+            display: grid;
+            grid-template-rows: 60px auto auto 100px;
+            grid-template-columns: 15% 5px auto 50px 15%;
+            background-color: beige;
+        }
+
+        .a {
+            grid-row-start: 1;
+            grid-row-end: 2;
+            grid-column-start: 1;
+            grid-column-end: 6;
+
+        }
+
+        .b {
+            grid-row-start: 2;
+            grid-row-end: 4;
+            grid-column-start: 1;
+            grid-column-end: 3;
+
+        }
+
+        .c {
+            grid-row-start: 2;
+            grid-row-end: 3;
+            grid-column-start: 3;
+            grid-column-end: 4;
+            position: sticky;
+            position: -webkit-sticky;
+            top: 0;
+            background-color: beige;
+            font-size: 20px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+
+        }
+
+        .f {
+            grid-row-start: 3;
+            grid-row-end: 4;
+            grid-column-start: 3;
+            grid-column-end: 4;
+
+        }
+
+        .e {
+            grid-row-start: 4;
+            grid-row-end: 5;
+            grid-column-start: 1;
+            grid-column-end: 6;
+
+        }
+
+        .d {
+            grid-row-start: 2;
+            grid-row-end: 4;
+            grid-column-start: 4;
+            grid-column-end: 6;
+
+        }
+
+        ul,
+        ol {
+            list-style: none;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .clearfix {
+            content: '';
+            display: block;
+            clear: both;
+        }
+
+        .content {
+            background-color: beige;
+            height: 2300px;
+
+        }
+
+        .content>aside {
+            float: left;
+            border: 1px solid beige;
+            width: 20%;
+            background-color: beige;
+
+
+
+        }
+
+        .content>main {
+
+            float: left;
+            max-width: 808px;
+
+
+        }
+
+        p {
+            text-indent: 2em;
+        }
+
+        pre {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        code,
+        span {
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        a {
+            text-decoration: none;
+            color: #000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="a">
+            <h1>
+                <center>Vue进阶属性--computed、watch</center>
+            </h1>
+        </div>
+        <div class="b"></div>
+        <div class="c sticky"><strong>【目录】</strong>
+
+            <a href="#computed">computed</a>、
+            <a href="#watch">watch</a>
+
+        </div>
+        <div class="d">
+
+        </div>
+        <div class="f">
+            <main>
+
+                <strong style="font-size: 20px;">【正文】</strong>
+                <br>
+                <h3 id="computed">computed</h3>
+                <span>
+                    计算属性，相当于一个赋值，根据几个属性计算而来的结果设置成一个属性。<br>
+                    具体例子详见如下：<br>
+                    <a href="https://codesandbox.io/s/modest-matsumoto-pd03w" target="_blank">不用computed筛选男女</a><br>
+                    <a href="https://codesandbox.io/s/little-breeze-hdx44" target="_blank">用computed筛选男女</a>
+                </span><br>
+
+                <br>
+                <hr>
+                <br>
+                <h3 id="watch">watch</h3>
+                <span>监听或者侦听。当数据变化的时候执行某些操作.
+                    <br>
+                    具体例子详见如下：<br>
+                    <a href="https://codesandbox.io/s/lucid-shamir-cpcw3" target="_blank">撤销</a><br>
+                    <a href="https://codesandbox.io/s/objective-star-vu2h3">模仿computed的用途</a><br>
+                    <br>
+                    <h3>watch的两个属性</h3>
+                    <ul>
+                        <li>immediate：watch默认在数据从无到有的过程是不进行监听的，如果需要监听这个过程，可将immediate设置为true；
+
+                        </li>
+                        <li>
+                            deep：若对象没有改变，但是对象内部的属性改变了，需要监听此变化就将deep设置为true。
+                        </li>
+                        <li>
+                            需要注意的是watch内部函数不可使用箭头函数，因为箭头函数本身无this，会继承window，导致箭头函数的this指向window，并非是Vue实例。
+                        </li>
+                    </ul>
+                    具体语法请看<a href="https://cn.vuejs.org/v2/api/#watch" target="_blank">文档</a>
+                </span>
+                <br><br>
+                <hr>
+                <br>
+                <h3>computed与watch的区别</h3><br>
+                <span><strong>computed</strong>是被<strong>计算</strong>出来的属性，它会根据所依赖的数据动态显示新的计算结果,
+                    该计算结果会被缓存起来。computed的值是会被<strong>缓存</strong>的。如果所依赖的数据发生改变时候,
+                    就会重新计算最新的结果。</span><br><br>
+
+                <span>
+                    <strong>watch</strong>不支持缓存，数据变，直接会触发相应的操作；
+                    watch支持异步；
+                    监听的函数接收两个参数，第一个参数是最新的值（newvalue）；第二个参数是输入之前的值（oldvalue）；
+                    监听数据必须是data中声明过或者父组件传递过来的props中的数据，当数据变化时，触发其他操作，函数有两个参数（deep、immediate）
+                </span>
+                <br>
+                <br>
+                <br>
+
+            </main>
+
+        </div>
+        <div class="e">
+            <center>
+                <hr>
+                <footer>&copy;此博客最终解释权归Mi Manchi所有</footer>
+                <br><br>
+            </center>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
