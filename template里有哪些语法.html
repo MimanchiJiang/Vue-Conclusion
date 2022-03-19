@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>template里有哪些语法</title>
+    <style>
+        .container {
+            display: grid;
+            grid-template-rows: 60px auto auto 100px;
+            grid-template-columns: 15% 5px auto 50px 15%;
+            background-color: beige;
+        }
+
+        .a {
+            grid-row-start: 1;
+            grid-row-end: 2;
+            grid-column-start: 1;
+            grid-column-end: 6;
+
+        }
+
+        .b {
+            grid-row-start: 2;
+            grid-row-end: 4;
+            grid-column-start: 1;
+            grid-column-end: 3;
+
+        }
+
+        .c {
+            grid-row-start: 2;
+            grid-row-end: 3;
+            grid-column-start: 3;
+            grid-column-end: 4;
+            position: sticky;
+            position: -webkit-sticky;
+            top: 0;
+            background-color: beige;
+            font-size: 20px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+
+        }
+
+        .f {
+            grid-row-start: 3;
+            grid-row-end: 4;
+            grid-column-start: 3;
+            grid-column-end: 4;
+            min-height: 100vh;
+
+        }
+
+        .e {
+            grid-row-start: 4;
+            grid-row-end: 5;
+            grid-column-start: 1;
+            grid-column-end: 6;
+
+        }
+
+        .d {
+            grid-row-start: 2;
+            grid-row-end: 4;
+            grid-column-start: 4;
+            grid-column-end: 6;
+
+        }
+
+        ul,
+        ol {
+            list-style: none;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .clearfix {
+            content: '';
+            display: block;
+            clear: both;
+        }
+
+        .content {
+            background-color: beige;
+            height: 2300px;
+
+        }
+
+        .content>aside {
+            float: left;
+            border: 1px solid beige;
+            width: 20%;
+            background-color: beige;
+
+
+
+        }
+
+        .content>main {
+
+            float: left;
+            max-width: 808px;
+
+
+        }
+
+        p {
+            text-indent: 2em;
+        }
+
+        pre {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        code,
+        span {
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="a">
+            <h1>
+                <center>template里有哪些语法</center>
+            </h1>
+        </div>
+        <div class="b"></div>
+        <div class="c sticky"><strong>【目录】</strong>
+
+            <a href="#表达式">表达式</a>、
+            <a href="#v-html">v-html</a>、
+            <a href="#v-bind">v-bind</a>、
+            <a href="#if">if……else</a>、
+            <a href="#for">for(value,key)in</a>、
+            <a href="#v-show">v-show</a>、
+            <a href="#修饰符">修饰符</a>
+
+        </div>
+        <div class="d">
+
+        </div>
+        <div class="f">
+            <main>
+
+                <strong style="font-size: 20px;">【正文】</strong>
+                <br>
+                <strong><a href="https://cn.vuejs.org/v2/api/">本篇文章仅简单介绍Vue常用指令，详情可点此跳转</a></strong>
+                <h3 id="表达式">表达式</h3>
+                <span>
+                    {{object.a}} -- 表达式<br>
+                    {{n+1}} -- 可以写任何运算<br>
+                    {{fn(n)}} -- 可以调用函数，他会优先从method里找<br>
+                    <h4>提示！</h4>
+                    <span>
+                        如果值为null或者undefined，就不会显示。<br>
+                        <br>
+                    </span>
+                </span>
+                <hr>
+                <br>
+                <h3 id="v-html">v-html</h3>
+                <span>
+                    如果使用v-html标签，内容则按普通 HTML 插入，不会作为 Vue 模板进行编译。
+                </span>
+                <br><br>
+                <hr><br>
+                <h3 id="v-bind">v-bind、v-on</h3>
+                <span>
+                    v-bind可以用来绑定一个标签或者对象，可缩写成<strong> : </strong><br>
+                    v-on用来绑定事件监听器。事件类型由参数指定。表达式可以是一个方法的名字或一个内联语句，如果没有修饰符也可以省略。
+                </span>
+                <br>
+                <br>
+                <hr>
+                <br>
+                <h3 id="if">v-if、v-else、v-else-if</h3>
+                <span>
+                    v-if=“判断”，如果为真则显示，为假就不显示。<br>
+                    <strong>注意！</strong>此指令是让标签不出现在DOM树中，<a href="#show">v-show</a>是通过CSS隐藏.
+                </span>
+                <br>
+                <br>
+                <hr>
+                <br>
+                <h3 id="for">for(value,key) in</h3>
+                <span>可用于数据的多次渲染或遍历。<br>
+                    <strong>注意！</strong>使用v-for一定要带key</span>
+                <br><br>
+                <hr><br>
+                <h3 id="v-show">v-show</h3>
+                <span>
+                    该指令通过CSS对所属标签进行显示与隐藏。当其中式子为真时显示。
+                </span>
+                <br><br>
+                <hr><br>
+                <h3 id="修饰符">修饰符</h3>
+                <span>
+                    .stop -- 阻止传播/冒泡
+                    <br>
+                    .prevent -- 阻止默认动作
+                    <br>
+                    .sync -- 详情跳转另一篇&nbsp;&nbsp;<strong><a
+                            href="https://mimanchijiang.github.io/Vue-Conclusion/%E5%85%B3%E4%BA%8E%E4%BF%AE%E9%A5%B0%E7%AC%A6.sync%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3.html">文档</a>
+                    </strong>
+                </span>
+            </main>
+
+        </div>
+        <div class="e">
+            <center>
+                <hr>
+                <footer>&copy;此博客最终解释权归Mi Manchi所有</footer>
+                <br><br>
+            </center>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
