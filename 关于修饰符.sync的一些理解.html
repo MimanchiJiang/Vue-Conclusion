@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于修饰符.sync的一些理解</title>
+    <style>
+        .container {
+            display: grid;
+            grid-template-rows: 60px auto auto 100px;
+            grid-template-columns: 15% 5px auto 50px 15%;
+            background-color: beige;
+        }
+
+        .a {
+            grid-row-start: 1;
+            grid-row-end: 2;
+            grid-column-start: 1;
+            grid-column-end: 6;
+
+        }
+
+        .b {
+            grid-row-start: 2;
+            grid-row-end: 4;
+            grid-column-start: 1;
+            grid-column-end: 3;
+
+        }
+
+        .c {
+            grid-row-start: 2;
+            grid-row-end: 3;
+            grid-column-start: 3;
+            grid-column-end: 4;
+            position: sticky;
+            position: -webkit-sticky;
+            top: 0;
+            background-color: beige;
+            font-size: 20px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+
+        }
+
+        .f {
+            grid-row-start: 3;
+            grid-row-end: 4;
+            grid-column-start: 3;
+            grid-column-end: 4;
+            min-height: 100vh;
+            font-size: 20px
+        }
+
+        .e {
+            grid-row-start: 4;
+            grid-row-end: 5;
+            grid-column-start: 1;
+            grid-column-end: 6;
+
+        }
+
+        .d {
+            grid-row-start: 2;
+            grid-row-end: 4;
+            grid-column-start: 4;
+            grid-column-end: 6;
+
+        }
+
+        ul,
+        ol {
+            list-style: none;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .clearfix {
+            content: '';
+            display: block;
+            clear: both;
+        }
+
+        .content {
+            background-color: beige;
+            height: 2300px;
+
+        }
+
+        .content>aside {
+            float: left;
+            border: 1px solid beige;
+            width: 20%;
+            background-color: beige;
+
+
+
+        }
+
+        .content>main {
+
+            float: left;
+            max-width: 808px;
+
+
+        }
+
+        p {
+            text-indent: 2em;
+        }
+
+        pre {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        code,
+        span {
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        a {
+            text-decoration: none;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="a">
+            <h1>
+                <center>关于修饰符.sync的一些理解</center>
+            </h1>
+        </div>
+        <div class="b"></div>
+        <div class="c sticky">
+        </div>
+        <div class="d">
+
+        </div>
+        <div class="f">
+            <main>
+                本文档参考&nbsp;&nbsp;<a href="https://www.jianshu.com/p/6b062af8cf01">深入理解vue 修饰符sync</a>、<a
+                    href="https://cn.vuejs.org/v2/guide/components-custom-events.html#sync-%E4%BF%AE%E9%A5%B0%E7%AC%A6">Vue.js</a><br>
+                <h4>案例</h4>
+                <pre><xmp>
+<div id="app">
+    <div>{{bar}}</div>
+    <my-comp :foo.sync="bar"></my-comp>
+</div>
+<script>
+    Vue.component('my-comp', {
+        template: '<div @click="increment">点我+1</div>',
+        data: function () {
+            return { copyFoo: this.foo }
+        },
+        props: ['foo'],
+        methods: {
+            increment: function () {
+                this.$emit('update:foo', ++this.copyFoo);
+            }
+        }
+    });
+    new Vue({
+        el: '#app',
+        data: { bar: 0 }
+    });
+</script></xmp>
+                </pre>
+                <span>
+                    <pre><xmp>在这其中，代码<my-comp :foo.sync="bar"></my-comp>会被扩展成<comp :foo="bar" @update:foo="val => bar = val"></comp></xmp></pre>
+                    <br>
+                    由此可见，.sync修饰符的功能是，当一个子组件修改了一个prop值时，其变化也会同步给父组件，并进行绑定。如果不用.sync修饰符，其实也能做，利用prop传初始值，然后设置一个事件监听即可。<br>
+                    <br>
+                    说白了.sync就是一个语法糖。
+                </span>
+            </main>
+
+        </div>
+        <div class="e">
+            <center>
+                <hr>
+                <footer>&copy;此博客最终解释权归Mi Manchi所有</footer>
+                <br><br>
+            </center>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
