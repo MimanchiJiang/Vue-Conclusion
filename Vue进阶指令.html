@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue进阶指令</title>
+    <style>
+        .container {
+            display: grid;
+            grid-template-rows: 60px auto auto 100px;
+            grid-template-columns: 15% 5px auto 50px 15%;
+            background-color: #fff;
+        }
+
+        .a {
+            grid-row-start: 1;
+            grid-row-end: 2;
+            grid-column-start: 1;
+            grid-column-end: 6;
+
+        }
+
+        .b {
+            grid-row-start: 2;
+            grid-row-end: 4;
+            grid-column-start: 1;
+            grid-column-end: 3;
+
+        }
+
+        .c {
+            grid-row-start: 2;
+            grid-row-end: 3;
+            grid-column-start: 3;
+            grid-column-end: 4;
+            position: sticky;
+            position: -webkit-sticky;
+            top: 0;
+            background-color: #fff;
+            font-size: 20px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+
+        }
+
+        .f {
+            grid-row-start: 3;
+            grid-row-end: 4;
+            grid-column-start: 3;
+            grid-column-end: 4;
+            min-height: 100vh;
+            font-size: 35px
+        }
+
+        .e {
+            grid-row-start: 4;
+            grid-row-end: 5;
+            grid-column-start: 1;
+            grid-column-end: 6;
+
+        }
+
+        .d {
+            grid-row-start: 2;
+            grid-row-end: 4;
+            grid-column-start: 4;
+            grid-column-end: 6;
+
+        }
+
+        ul,
+        ol {
+            list-style: none;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .clearfix {
+            content: '';
+            display: block;
+            clear: both;
+        }
+
+        p {
+            text-indent: 2em;
+        }
+
+        pre {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        code,
+        span {
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        a {
+            text-decoration: none;
+
+        }
+
+
+
+        a:hover {
+            color: blue
+        }
+
+        h3 {
+            font-size: 25px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="a">
+            <h1>
+                <center>Vue进阶指令</center>
+            </h1>
+        </div>
+        <div class="b"></div>
+        <div class="c sticky">
+            <strong><a href="#directive">directive</a></strong>、
+            <strong><a href="#mixins">mixins</a></strong>、
+            <strong><a href="#provide与inject">provide与inject</a></strong>、
+            <strong><a href="#v-model">v-model</a></strong>
+
+        </div>
+        <div class="d">
+
+        </div>
+        <div class="f">
+            <main>
+                <h3 id="directive">一、directive</h3>
+                <span>
+                    可用来自定义指令，主要用于封装，减少重复的Dom操作。案例如下：（点击后在控制台打印出y）
+                </span>
+                <pre>
+Vue.directive('y', {
+    inserted(el){
+         el.addEventListener('click', ()=>{
+         console.log('y')
+        })
+    }
+    })
+     
+     new Vue({
+    template: `
+         <div v-y>hi</div>
+    `
+    }).$mount("#app");
+                </pre>
+
+                <span>
+                    运用Vue.directive可设置全局指令；若在new Vue内设置则为局部指令。详细信息请点击<strong><a
+                            href="https://codesandbox.io/s/wonderful-sky-j087xm?file=/src/main.js">文档</a></strong>
+                </span><br><br>
+
+                <h3 id="mixins">
+                    二、mixins
+                </h3>
+                <span>
+                    混入，就是复制。用于减少data、methods、钩子函数的重复率。将重复的部分写在一个文件里，再去引入。<br>
+                    案例如下：（App组件诞生时打印“我出生了”）
+                </span>
+                <span>
+                    script部分：引入文件
+                </span>
+                <pre>
+                    <xmp>
+<script>
+    import log from "./mixins/log";
+    export default {
+        name: "App",
+        mixins: [log],
+    };
+</script></xmp>
+                </pre>
+                <span>
+                    log.js部分：具体执行函数
+                </span>
+                <pre>
+                    <xmp>
+export default {
+created(){
+    console.log('我出生了');
+}
+};
+                    </xmp>
+                </pre>
+                <span>
+                    详细代码请点击<strong><a
+                            href="https://codesandbox.io/s/elated-curie-g56hcf?file=/src/mixins/log.js:0-61">文档</a></strong>
+                </span><br><br>
+
+                <h3 id="provide与inject">
+                    三、provide与inject
+                </h3>
+                <span>
+                    这对选项需要一起使用，以允许一个祖先组件向其所有子孙后代注入一个依赖，不论组件层次有多深，并在其上下游关系成立的时间里始终生效。<br>
+                    简单来说就是provide内写你提供什么，inject写你想要拿什么。<br>
+                    详细信息请看<strong><a href="https://cn.vuejs.org/v2/api/#provide-inject">文档</a></strong>
+                </span><br><br>
+
+                <h3 id="v-model">
+                    四、Vue表单与v-model
+                </h3>
+                <span>
+                    实现双向绑定，即修改内存，页面发生变化；修改页面，内存发生变化。<br>
+                    基本用法看<strong><a href="https://cn.vuejs.org/v2/api/#v-model">文档</a></strong><br>
+
+                    <strong>修饰符：</strong>
+                    <ul>
+                        <li>
+                            .lazy 当标签失去焦点时再进行修改。（说白了就是让你输入完毕了再进行保存，省略你输入时的内存）
+                        </li>
+                        <li>
+                            .number 只要数字，并把类型转换成数字
+                        </li>
+                        <li>
+                            .trim 输入框两头的空格删去。
+                        </li>
+                    </ul>
+                </span>
+                <span>
+                    v-model是v-bind:value和v-on:input的语法糖。
+                </span>
+            </main>
+
+        </div>
+        <div class="e">
+            <center>
+                <hr>
+                <footer>&copy;此博客最终解释权归Mi Manchi所有</footer>
+                <br><br>
+            </center>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
