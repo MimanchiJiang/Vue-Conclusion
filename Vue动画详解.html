@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue动画详解</title>
+    <style>
+        .container {
+            display: grid;
+            grid-template-rows: 60px auto auto 100px;
+            grid-template-columns: 15% 5px auto 50px 15%;
+            background-color: #fff;
+        }
+
+        .a {
+            grid-row-start: 1;
+            grid-row-end: 2;
+            grid-column-start: 1;
+            grid-column-end: 6;
+
+        }
+
+        .b {
+            grid-row-start: 2;
+            grid-row-end: 4;
+            grid-column-start: 1;
+            grid-column-end: 3;
+
+        }
+
+        .c {
+            grid-row-start: 2;
+            grid-row-end: 3;
+            grid-column-start: 3;
+            grid-column-end: 4;
+            position: sticky;
+            position: -webkit-sticky;
+            top: 0;
+            background-color: #fff;
+            font-size: 20px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+
+        }
+
+        .f {
+            grid-row-start: 3;
+            grid-row-end: 4;
+            grid-column-start: 3;
+            grid-column-end: 4;
+            min-height: 100vh;
+            font-size: 35px
+        }
+
+        .e {
+            grid-row-start: 4;
+            grid-row-end: 5;
+            grid-column-start: 1;
+            grid-column-end: 6;
+
+        }
+
+        .d {
+            grid-row-start: 2;
+            grid-row-end: 4;
+            grid-column-start: 4;
+            grid-column-end: 6;
+
+        }
+
+        ul,
+        ol {
+            list-style: none;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .clearfix {
+            content: '';
+            display: block;
+            clear: both;
+        }
+
+        p {
+            text-indent: 2em;
+        }
+
+        pre {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        code,
+        span {
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        a {
+            text-decoration: none;
+
+        }
+
+
+
+        a:hover {
+            color: blue
+        }
+
+        h3 {
+            font-size: 25px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="a">
+            <h1>
+                <center>Vue动画详解</center>
+            </h1>
+        </div>
+        <div class="b"></div>
+        <div class="c sticky">
+        </div>
+        <div class="d">
+
+        </div>
+        <div class="f">
+            <main>
+                <h3>Vue动画特有属性</h3>
+
+                <hr>
+                <br>
+                <span>
+                    <ul style="font-weight: 1000;">
+                        <li>
+                            ①name-enter-active - 进入过程
+                        </li>
+                        <li>
+                            ②name-enter - 进入的第一帧
+                        </li>
+                        <li>
+                            ③name-enter-to - 进入的最后一帧（相当于正常状态）
+                        </li>
+                        <li>
+                            ④name-leave-active - 淡出过程
+                        </li>
+                        <li>
+                            ⑤name-leave - 淡出的第一帧
+                        </li>
+                        <li>
+                            ⑥name-leave-to - 淡出的最后一帧
+                        </li>
+                    </ul>
+                    <span>一般来说只需要写①②④⑥，其中②⑥相同</span>
+                </span><br>
+
+                <span><strong><a
+                            href="http://js.jirengu.com/rawayokude/8/edit ">transition动画案例</a></strong>,通过添加与删除类来实现动画效果<br>
+                    <hr>
+                    <strong><a
+                            href="http://js.jirengu.com/rawayokude/16/edit">animation动画案例</a></strong>，利用animation告诉Vue过程怎么动<br>
+                    <hr>
+                    <strong><a href="http://js.jirengu.com/baxofequxa/15/edit ">轮播效果动画</a></strong>
+                    <hr>
+                    钩子函数 + velocity.js + Dom -- 通过Js修改动画效果
+                    <hr>
+                    当一个动画包含<strong>多种元素</strong>时，需要对每一个元素加key。
+                    <br>
+                    <hr>
+                    out/in、in/out:先执行淡出（out）再执行淡入（in）、先执行淡入（in）再执行淡出（out）
+                    <br>
+                    <hr>
+                    组件动画：component :is="xxx" -- 通过修改<strong>组件名字</strong>来添加组件。
+                    <hr>
+                    列表动画：transition-group tag元素：替换transition-group标签；必须有key。
+                    <hr>
+                </span>
+
+                <span>
+                    <h10 style="font-weight:800">可参考文档</h10><br>
+                    <strong><a
+                            href="https://cn.vuejs.org/v2/guide/transitions.html#%E6%A6%82%E8%BF%B0">Vue.js</a></strong><br>
+                    <strong><a
+                            href="https://cn.vuejs.org/v2/guide/transitions.html#%E6%A6%82%E8%BF%B0">Animate.css</a></strong>--通过css添加动画效果，需引入相关库。<br>
+                    <strong><a href="http://velocityjs.org/#fade">Velocity.js</a></strong>-- 通过JS修改动画效果，需引入相关库。<br>
+                    <strong><a href="https://www.bootcdn.cn/">BootCDN</a></strong>--查找cdn链接
+                </span>
+
+            </main>
+
+        </div>
+        <div class="e">
+            <center>
+                <hr>
+                <footer>&copy;此博客最终解释权归Mi Manchi所有</footer>
+                <br><br>
+            </center>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
